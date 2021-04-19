@@ -4,7 +4,13 @@
 
 @layer base {
 
-  h1 {
+  .app-container {
+    @apply container mx-auto w-screen;
+  }
+
+  header h1 {
+    @apply text-center;
+    @apply mt-4;
     @apply text-xl;
   }
 
@@ -13,6 +19,24 @@
     @apply bg-gray-200 rounded-md;
     @apply focus:outline-none;
     @apply w-2/3;
+  }
+
+  .user-result-row {
+    @apply flex;
+    @apply p-8;
+    @apply space-x-4;
+    @apply bg-gray-200;
+    @apply z-10;
+    @apply rounded-md;
+    @apply hover:bg-blue-100;
+  }
+
+  .user-avatar {
+    @apply block;
+    @apply object-contain;
+    @apply w-16;
+    @apply rounded-full;
+    @apply mx-auto;
   }
 
   .search-button {
