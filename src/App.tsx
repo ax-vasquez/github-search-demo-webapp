@@ -1,24 +1,39 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React, { useEffect, useState } from 'react';
+import axios from "axios"
+import { useUserSearchResults } from './hooks/useUserSearchResult';
+import { UserRow } from './UserRow';
 
 function App() {
+  const [input, setInput] = useState(``)
+  const [page, setPage] = useState(0)
+  const userSearchResults = useUserSearchResults({
+    q: input,
+    page,
+  })
+
+  const searchHandler = (e: any) => {
+    // Just assume that, when the user enters a new search, they want to go to the first page
+    setPage(1)
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <h1>Github User Search demo</h1>
+      <input type="text" placeholder="User query..." onChange={e => setInput(e.target.value)}/>
+      <button onClick={searchHandler}>Search</button>
+      {userSearchResults.length > 0 ?
+        userSearchResults.map(result => {
+          return (
+            <UserRow 
+              userRecord={result}
+            />
+          )
+        })
+      :
+        <div>
+          <p>Nothing yet!</p>
+        </div>
+      }
     </div>
   );
 }
