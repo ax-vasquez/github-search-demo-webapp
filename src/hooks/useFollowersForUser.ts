@@ -10,8 +10,11 @@ export const useFollowersForUser = (args: {
     useEffect(() => {
         axios.get(`https://axv-github-user-search-demo.herokuapp.com/user/followers?username=${args.username}`)
             .then(res => {
-                console.log(`FOLLOWERS RESPONSE: `, res)
-                setUserRecords(res.data)
+                if (res.data.error) {
+                    console.error(`Encountered error while fetching followers for '${args.username}': `, res.data.error)
+                } else {
+                    setUserRecords(res.data.data)
+                }
             })
     }, [])
 

@@ -11,12 +11,12 @@ export const useFollowingForUser = (args: {
         axios.get(`https://axv-github-user-search-demo.herokuapp.com/user/following?username=${args.username}`)
             .then(res => {
                 if (res.data.error) {
-                    alert(res.data.error)
+                    console.error(`Encountered error while fetching users followed by '${args.username}': `, res.data.error)
                 } else {
-                    setUserRecords(res.data)
+                    setUserRecords(res.data.data)
                 }
             })
-    }, [userRecords])
+    }, [])
 
     return userRecords
 }

@@ -10,8 +10,6 @@ export const UserRow = (props: {
         login
     } = props.userRecord
 
-    console.log(`RENDERING: `, login)
-
     const followers = useFollowersForUser({
         username: login
     })
@@ -24,11 +22,11 @@ export const UserRow = (props: {
             <h3>{login}</h3>
             <div>
                 <h4>Follower count: </h4>
-                <p>{0}</p>
+                <p>{followers.length === 100 ? `100+` : followers.length}</p>
             </div>
             <div>
                 <h4>Following count: </h4>
-                <p>{0}</p>
+                <p>{following.length === 100 ? `100+` : following.length}</p>
             </div>
         </div>
     )
