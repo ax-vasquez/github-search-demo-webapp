@@ -34,7 +34,7 @@ function App() {
     })
   : 0
   const pageCount = (!!userSearchResults && !!userSearchResults.items) ? Math.ceil(totalUsers / 3) : 1
-  const results = (!!userSearchResults && !!userSearchResults.items) ? userSearchResults.items : []
+  const results = (!!userSearchResults && !!userSearchResults.items && page !== 0) ? userSearchResults.items : []
 
   const submitHandler = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
@@ -72,11 +72,18 @@ function App() {
   }
 
   return (
-    <div className="container mx-auto w-screen">
+    <div className="app-container">
       <header>
-        <h1 className="text-center mt-4">Github User Search demo</h1>
+        <h1>Github User Search demo</h1>
       </header>
-      <body>
+      <div className="m-8">
+        This tool utilizes the GitHub search API (through <code>octokit</code>) and demonstrates <b>unauthenticated</b> searching.
+        When using this tool, it's very likely you'll hit a rate limit either with the Search API (which has a rate limit of 10
+        requests per minute) and/or the core API requests (which has a rate limit of 80 requests per minute). The result set per page is small to reduce
+        the number of requests needed per page, but it's still possible to run into the rate limits by executing searches in rapid-succession,
+        or switching through pages too quickly. In short, this is for demonstration purposes, only.
+      </div>
+      <div>
         <form onSubmit={submitHandler} className="text-center">
           <label>
             User query: 
@@ -95,7 +102,7 @@ function App() {
               )
             })
           :
-            <p>Nothing yet!</p>
+            null
           }
         </div>
         {results.length > 0 ? 
@@ -109,7 +116,7 @@ function App() {
           </div>
         : null}
         {results.length > 0 ? <p className="text-center m-4">Page {page} out of {pageCount}</p> : null}
-      </body>
+      </div>
       
     </div>
   );
