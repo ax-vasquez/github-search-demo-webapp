@@ -11,7 +11,6 @@ export const useStarredReposForUser = (args: {
     useEffect(() => {
         axios.get(`https://axv-github-user-search-demo.herokuapp.com/user/repos/starred?username=${args.username}`)
             .then(res => {
-                console.log(`STARRED RES: `, res)
                 if (res.data.error) {
                     console.error(`Encountered error while fetching starred repos for '${args.username}': `, res.data.error)
                     args.setRateLimitErrorHandler(res.data.error)
