@@ -18,7 +18,7 @@ export const UserRow = (props: {
     })
 
     return (
-        <div key={login}>
+        <div>
             <h3>{login}</h3>
             <div>
                 <h4>Follower count: </h4>

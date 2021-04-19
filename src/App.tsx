@@ -85,6 +85,7 @@ function App() {
           results.map((result: UserRecord) => {
             return (
               <UserRow 
+                key={result.login}
                 userRecord={result}
               />
             )
