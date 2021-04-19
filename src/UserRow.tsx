@@ -36,7 +36,11 @@ export const UserRow = (props: {
     })
 
     return (
-        <div className="user-result-row" onClick={() => window.open(userData.html_url)}>
+        <div className="user-result-row" onClick={() => {
+            if (!!userData.html_url) {
+                window.open(userData.html_url)
+            }
+        }}>
             <div>
                 <img className="user-avatar" src={avatar_url}/>
                 <h3 className="text-center mt-2">{login}</h3>
@@ -44,7 +48,7 @@ export const UserRow = (props: {
             </div >
             {!!rateLimitError ?
                 <div className="flex-1 text-center">
-                    <p className="mt-8 italic text-gray-500">Uh oh! You've been rate limited... try again soon.</p>
+                    <p className="mt-8 italic text-gray-500">Uh oh! GitHub request rate limit reached - try again later...</p>
                 </div>
             :
                 <div className="flex-1">

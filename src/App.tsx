@@ -23,10 +23,12 @@ const guardedRecordLimit = (args: {
 function App() {
   const [input, setInput] = useState(``)
   const [jumpToPageInput, setJumpToPageInput] = useState(``)
+  const [searchRateLimited, setSearchRateLimited] = useState(false)
   const [page, setPage] = useState(0)
   const userSearchResults = useUserSearchResults({
     q: input,
     page,
+    setSearchRateLimited
   })
   const totalUsers = !!userSearchResults ? 
     guardedRecordLimit({
@@ -102,7 +104,7 @@ function App() {
               )
             })
           :
-            null
+            (!!searchRateLimited ? <p className="text-center italic text-red-900">Oops! You've hit the GitHub Search API rate limit - try again soon...</p> : null)
           }
         </div>
         {results.length > 0 ? 
