@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { useUserSearchResults } from './hooks/useUserSearchResult';
 import { UserRow } from './UserRow';
 import { UserRecord } from './types';
+import './index.css';
 
 /**
  * The Search API only allows you to get the first 1000 records; whenever we encounter a result
@@ -71,40 +72,45 @@ function App() {
   }
 
   return (
-    <div>
-      <h1>Github User Search demo</h1>
-      <form onSubmit={submitHandler}>
-        <label>
-          User query: 
-          <input type="text" onChange={searchInputHandler} value={input}/>
-        </label>
-        <input type="submit" value="Search"/>
-      </form>
-      <div>
-        {results.length > 0 ?
-          results.map((result: UserRecord) => {
-            return (
-              <UserRow 
-                key={result.login}
-                userRecord={result}
-              />
-            )
-          })
-        :
-          <div>
+    <div className="container mx-auto w-screen">
+      <header>
+        <h1 className="text-center mt-4">Github User Search demo</h1>
+      </header>
+      <body>
+        <form onSubmit={submitHandler} className="text-center">
+          <label>
+            User query: 
+            <input type="text" onChange={searchInputHandler} value={input}/>
+          </label>
+          <input type="submit" value="Search" className="search-button"/>
+        </form>
+        <div className="space-y-4 m-4">
+          {results.length > 0 ?
+            results.map((result: UserRecord) => {
+              return (
+                <UserRow 
+                  key={result.login}
+                  userRecord={result}
+                />
+              )
+            })
+          :
             <p>Nothing yet!</p>
-          </div>
-        }
-      </div>
-      {results.length > 0 ? <p>Page {page} out of {pageCount}</p> : null}
-      {results.length > 0 ? 
-        <div>
-          <input placeholder="Jump-to page..." onChange={e => setJumpToPageInput(e.target.value)}/>
-          <button onClick={e => jumpToPageHandler()} disabled={!jumpToPageInputIsValid()}>Go!</button>
+          }
         </div>
-      : null}
-      <button onClick={prevPageHandler}>Prev</button>
-      <button onClick={nextPageHandler}>Next</button>
+        {results.length > 0 ? 
+          <div>
+            <button className="float-left ml-8" onClick={prevPageHandler}>Prev</button>
+            <button className="float-right mr-8" onClick={nextPageHandler}>Next</button>
+            <div className="text-center">
+              <input className="mr-4" placeholder="Jump-to page..." onChange={e => setJumpToPageInput(e.target.value)}/>
+              <button className="jump-page-button" onClick={e => jumpToPageHandler()} disabled={!jumpToPageInputIsValid()}>Go!</button>
+            </div>
+          </div>
+        : null}
+        {results.length > 0 ? <p className="text-center m-4">Page {page} out of {pageCount}</p> : null}
+      </body>
+      
     </div>
   );
 }
